@@ -1,1 +1,5 @@
 # demo-net47-transitive-dependency
+
+This project demonstrates the following issue when running a test:
+
+Our unit test project is targeting net47, using xunit and xunit.runner.visualstudio. The test has a transitive dependency that is native (Yubico.NativeShims), and we’ve used the `buildtransitive` nuget directive to specify a targets file that copies over the native dependency for native users (see the [Yubico.NativeShims project](https://github.com/Yubico/Yubico.NET.SDK/tree/develop/Yubico.NativeShims) for more information). However, we’re finding that this does not work for the test runner. When we build the project, we can see that Yubico.NativeShims.dll is being copied to the `\bin` directory. But when running the test, the native dependency (Yubico.NativeShims.dll) is not being copied to the test directory, resulting in a "System.DllNotFoundException : Unable to load DLL 'Yubico.NativeShims.dll'...HRESULT: 0x8007007E.
