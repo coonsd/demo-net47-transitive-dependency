@@ -26,8 +26,7 @@ namespace UnitTests
         {
             IEcdhPrimitives ecdhObject = EcdhPrimitives.Create();
 
-            int curveNum = 0;
-            ECCurve ecCurve = GetNamedCurve(curveNum);
+            ECCurve ecCurve = ECCurve.NamedCurves.nistP256;
 
             ECParameters keyPairA = ecdhObject.GenerateKeyPair(ecCurve);
             ECParameters keyPairB = ecdhObject.GenerateKeyPair(ecCurve);
@@ -39,18 +38,5 @@ namespace UnitTests
 
             Assert.True(isValid);
         }
-
-        // This method will get one of three curves: P-256, P384, or P-512.
-        // If the curveNum is
-        //    0, return P-256
-        //    1, return P-384
-        //    2, return P-512
-        // If the curveNum is any other value (other than 0, 1, or 2), return
-        // P-256.
-        private static ECCurve GetNamedCurve(int curveNum) => curveNum switch {
-            1 => ECCurve.NamedCurves.nistP384,
-            2 => ECCurve.NamedCurves.nistP521,
-            _ => ECCurve.NamedCurves.nistP256,
-        };
     }
 }
